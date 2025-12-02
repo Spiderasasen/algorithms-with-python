@@ -21,7 +21,6 @@ def main():
     exit_button = tk.Button(root, text="Exit", command=on_exit, width=20)
     exit_button.pack(pady=15)
 
-
     root.mainloop()
 
 #console log for buttons
