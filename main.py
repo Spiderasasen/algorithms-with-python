@@ -28,5 +28,10 @@ def main():
 def on_clicked(name: str):
     print(name, 'has been clicked')
 
+    #checking what items will be accessed
+    match name:
+        case 'Insertion Sort':
+            print('Insertion Sort algorithm has been executed')
+
 if __name__ == '__main__':
     main()
