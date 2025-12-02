@@ -16,8 +16,7 @@ COMPLEXITIES = {
     "Heap Sort": "Best/Average/Worst: O(n log n)"
 }
 
-
-def draw_bars(canvas, array, active_index = None, complexity=""):
+def draw_bars(canvas, array, active_index=None, compare_index=None, complexity=""):
     canvas.delete("all")
     c_width = 400
     c_height = 300
@@ -27,16 +26,21 @@ def draw_bars(canvas, array, active_index = None, complexity=""):
         y0 = c_height - val
         x1 = (i + 1) * bar_width
         y1 = c_height
-        color = "red" if i == active_index else "blue"
+        if i == active_index:
+            color = "red"
+        elif i == compare_index:
+            color = "green"
+        else:
+            color = "blue"
         canvas.create_rectangle(x0, y0, x1, y1, fill=color)
-        # Draw complexity text in top-left
-    canvas.create_text(10, 10, text=f"Time Complexity: \n{complexity}", anchor="nw", font=("Arial", 12, "bold"), fill="black")
+    canvas.create_text(10, 10, text=f"Time Complexity:\n{complexity}",
+                       anchor="nw", font=("Arial", 12, "bold"), fill="black")
     canvas.update_idletasks()
 
 
 def visualizer(canvas, steps, delay=0.1, complexity=""):
-    for state, active_index in steps:
-        draw_bars(canvas, state, active_index, complexity)
+    for state, active_index, compare_index in steps:
+        draw_bars(canvas, state, active_index=active_index, compare_index=compare_index, complexity=complexity)
         time.sleep(delay)
 
 
@@ -45,13 +49,28 @@ def insertion_sort_steps(array):
         key = array[i]
         j = i - 1
         # highlight the key
-        yield array[:], i
+        yield array[:], i, j
         while j >= 0 and array[j] > key:
             array[j + 1] = array[j]
             j -= 1
-            yield array[:], j+i  # yield after each shift
+            yield array[:], i, j  # yield after each shift
         array[j + 1] = key
-        yield array[:], j+1  # yield after placing key
+        yield array[:], i, None  # yield after placing key
+
+def bubble_sort_steps(array):
+    n = len(array)
+    swapped: bool = True
+    while swapped:
+        swapped = False
+        for j in range (0, n-1):
+            #yielding before comparison
+            yield array[:], j, j+1
+            if array[j] > array[j+1]:
+                array[j], array[j+1] = array[j+1], array[j]
+                swapped = True
+                #yield after swap
+                yield array[:], j, j+1
+        n -= 1
 
 # main window
 def main():
@@ -92,6 +111,11 @@ def main():
         text_box.insert(tk.END, f"Unsorted list:\n{numbers}\n\n")
         text_box.insert(tk.END, f"Sorted list:\n{sorted_numbers}\n")
 
+    def how_many_elements() -> int:
+        n = simpledialog.askinteger("Input", "How many numbers do you want to sort?", parent=root)
+        print(n)
+        return n
+
     # console log for buttons and also shows the results on the page
     def on_clicked(name: str):
         print(name, 'has been clicked')
@@ -100,7 +124,7 @@ def main():
         match name:
             case 'Insertion Sort':
                 # asking the user how many number
-                n = simpledialog.askinteger("Input", "How many numbers do you want to sort?")
+                n = how_many_elements()
 
                 # if nothing, then just return nothing
                 if n is None:
@@ -117,10 +141,27 @@ def main():
                 visualizer(canvas, steps, complexity=complexity)
                 #showing the differnace between unsorted and sorted
                 show_algorithm('Insertion Sort', num, num2)
+            case "Bubble Sort":
+                n = how_many_elements()
+                if n is None:
+                    return
+
+                #does the sorting in the background first
+                num = creatingTheList(n)
+                num2 = bubbleSort(num.copy())
+                #fixes the visulizer
+                steps = bubble_sort_steps(num.copy())
+                complexity = COMPLEXITIES.get(name, "")
+                visualizer(canvas, steps, complexity=complexity)
+                show_algorithm('Bubble Sort', num, num2)
 
     #Insertion Sort
     insort_button = tk.Button(root, text="Insertion Sort", command=lambda: on_clicked('Insertion Sort'), width=20)
     insort_button.pack(pady=15)
+
+    #bubble sort
+    bubble_button = tk.Button(root, text="Bubble Sort", command=lambda: on_clicked('Bubble Sort'), width=20)
+    bubble_button.pack(pady=15)
 
     # exit button
     exit_button = tk.Button(root, text="Exit", command=on_exit, width=20)
