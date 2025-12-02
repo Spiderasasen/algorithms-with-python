@@ -4,7 +4,18 @@ import random
 import time
 from sorting.insert import creatingTheList, insertionSort
 
-def draw_bars(canvas, array, active_index = None):
+# Dictionary of complexities for each algorithm
+COMPLEXITIES = {
+    "Insertion Sort": "Best: O(n), \nAverage/Worst: O(n^2)",
+    "Bubble Sort": "Best: O(n), \nAverage/Worst: O(n^2)",
+    "Selection Sort": "Always: O(n^2)",
+    "Merge Sort": "Best/Average/Worst: O(n log n)",
+    "Quick Sort": "Best/Average: O(n log n), \nWorst: O(n^2)",
+    "Heap Sort": "Best/Average/Worst: O(n log n)"
+}
+
+
+def draw_bars(canvas, array, active_index = None, complexity=""):
     canvas.delete("all")
     c_width = 400
     c_height = 300
@@ -16,11 +27,14 @@ def draw_bars(canvas, array, active_index = None):
         y1 = c_height
         color = "red" if i == active_index else "blue"
         canvas.create_rectangle(x0, y0, x1, y1, fill=color)
+        # Draw complexity text in top-left
+    canvas.create_text(10, 10, text=f"Time Complexity: \n{complexity}", anchor="nw", font=("Arial", 12, "bold"), fill="black")
     canvas.update_idletasks()
 
-def visualizer(canvas, steps, delay=0.1):
+
+def visualizer(canvas, steps, delay=0.1, complexity=""):
     for state, active_index in steps:
-        draw_bars(canvas, state, active_index)
+        draw_bars(canvas, state, active_index, complexity)
         time.sleep(delay)
 
 
@@ -97,7 +111,8 @@ def main():
                 print(num2)
                 #goes through the universal method and also calling the steps
                 steps = insertion_sort_steps(num.copy())
-                visualizer(canvas, steps)
+                complexity = COMPLEXITIES.get(name, "")
+                visualizer(canvas, steps, complexity=complexity)
                 #showing the differnace between unsorted and sorted
                 show_algorithm('Insertion Sort', num, num2)
 
