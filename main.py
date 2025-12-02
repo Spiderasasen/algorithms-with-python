@@ -2,7 +2,9 @@ import tkinter as tk
 from tkinter import simpledialog
 import random
 import time
-from sorting.insert import creatingTheList, insertionSort
+from sorting.bubble import bubbleSort
+from components.creat_list import creatingTheList
+from sorting.insert import insertionSort
 
 # Dictionary of complexities for each algorithm
 COMPLEXITIES = {
