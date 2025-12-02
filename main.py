@@ -5,6 +5,7 @@ import time
 from sorting.bubble import bubbleSort
 from components.creat_list import creatingTheList
 from sorting.insert import insertionSort
+from sorting.selection import selection_sort
 
 # Dictionary of complexities for each algorithm
 COMPLEXITIES = {
@@ -71,6 +72,22 @@ def bubble_sort_steps(array):
                 #yield after swap
                 yield array[:], j, j+1
         n -= 1
+
+def selection_sort_steps(array):
+    n = len(array)
+    for i in range(n):
+        minIndex = i
+        for j in range(i + 1, n):
+            # highlight i (red) and j (green)
+            yield array[:], i, j
+            if array[j] < array[minIndex]:
+                minIndex = j
+                # highlight new minIndex (could use green again)
+                yield array[:], i, minIndex
+        # swap the found minimum into place
+        array[i], array[minIndex] = array[minIndex], array[i]
+        yield array[:], i, minIndex
+
 
 # main window
 def main():
@@ -154,6 +171,19 @@ def main():
                 complexity = COMPLEXITIES.get(name, "")
                 visualizer(canvas, steps, complexity=complexity)
                 show_algorithm('Bubble Sort', num, num2)
+            case "Selection Sort":
+                n = how_many_elements()
+                if n is None:
+                    return
+
+                #does sorting in the back ground
+                num = creatingTheList(n)
+                num2 = selection_sort(num.copy())
+                #visualzer
+                steps = selection_sort_steps(num.copy())
+                complexity = COMPLEXITIES.get(name, "")
+                visualizer(canvas, steps, complexity=complexity)
+                show_algorithm('Selection Sort', num, num2)
 
     #Insertion Sort
     insort_button = tk.Button(root, text="Insertion Sort", command=lambda: on_clicked('Insertion Sort'), width=20)
@@ -162,6 +192,10 @@ def main():
     #bubble sort
     bubble_button = tk.Button(root, text="Bubble Sort", command=lambda: on_clicked('Bubble Sort'), width=20)
     bubble_button.pack(pady=15)
+
+    #selection sort
+    selection_button = tk.Button(root, text="Selection Sort", command=lambda: on_clicked('Selection Sort'), width=20)
+    selection_button.pack(pady=15)
 
     # exit button
     exit_button = tk.Button(root, text="Exit", command=on_exit, width=20)
