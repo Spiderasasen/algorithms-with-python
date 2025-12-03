@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import simpledialog
-import random
 import time
 from sorting.bubble import bubbleSort
 from components.creat_list import creatingTheList
@@ -93,11 +92,7 @@ def selection_sort_steps(array):
 def main():
     root = tk.Tk()
     root.title("Algorithm Visualization")
-    root.geometry("400x300")
-
-    #creates the canvas
-    canvas = tk.Canvas(root, width=400, height=300, bg="white")
-    canvas.pack()
+    root.geometry("900x800")
 
     #for exit button
     def on_exit():
@@ -108,6 +103,11 @@ def main():
     root_label = tk.Label(root, text="Algorithm Visualization", font=("Arial", 20))
     root_label.pack(pady=20)
     print('title load')
+
+    #creates the canvas
+    canvas = tk.Canvas(root, width=400, height=300, bg="white")
+    canvas.pack()
+    print('canvas created')
 
     #resuable page
     def show_algorithm(name, numbers, sorted_numbers):
