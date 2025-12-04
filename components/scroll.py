@@ -13,6 +13,9 @@ class ScrollableFrame(tk.Frame):
 
         self.scrollable_frame = tk.Frame(canvas)
 
+        #adding this to the gird system
+        self.scrollable_frame.grid_columnconfigure(0, weight=1)
+
         #updateing the scroll region
         self.scrollable_frame.bind(
             "<Configure>",
@@ -21,7 +24,13 @@ class ScrollableFrame(tk.Frame):
             )
         )
 
-        canvas.create_window((0,0), window=self.scrollable_frame, anchor="nw")
+        window_id = canvas.create_window((0,0), window=self.scrollable_frame, anchor="n")
+
+        def _resize(event):
+            canvas.itemconfig(window_id, width=event.width)
+
+        canvas.bind("<Configure>", _resize)
+
         canvas.configure(yscrollcommand=scrollbar.set)
 
         canvas.pack(side="left", fill="both", expand=True)

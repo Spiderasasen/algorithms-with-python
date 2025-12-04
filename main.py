@@ -55,19 +55,25 @@ def main():
     main_frame = ScrollableFrame(root)
     main_frame.pack(fill="both", expand=True)
 
+    #making a grid system
+    content = tk.Frame(main_frame.scrollable_frame)
+    content.grid(row=0, column=0, sticky="n")
+    #making where they can center
+    content.grid_rowconfigure(0, weight=1)
+
     #for exit button
     def on_exit():
         print('Exit button has been clicked')
         root.destroy()
 
     #title label
-    root_label = tk.Label(main_frame.scrollable_frame, text="Algorithm Visualization", font=("Arial", 20))
-    root_label.pack(pady=20)
+    root_label = tk.Label(content, text="Algorithm Visualization", font=("Arial", 20))
+    root_label.grid(row=0, column=0 ,pady=20)
     print('title load')
 
     #creates the canvas
-    canvas = tk.Canvas(main_frame.scrollable_frame, width=400, height=300, bg="white")
-    canvas.pack()
+    canvas = tk.Canvas(content, width=400, height=300, bg="white")
+    canvas.grid(row=1, column=0, pady=10)
     print('canvas created')
 
     #resuable page
@@ -159,24 +165,24 @@ def main():
                 show_algorithm('Merge Sort', num, num2)
 
     #Insertion Sort
-    insort_button = tk.Button(main_frame.scrollable_frame, text="Insertion Sort", command=lambda: on_clicked('Insertion Sort'), width=20)
-    insort_button.pack(pady=15)
+    insort_button = tk.Button(content, text="Insertion Sort", command=lambda: on_clicked('Insertion Sort'), width=20)
+    insort_button.grid(row=2, column=0 ,pady=15)
 
     #bubble sort
-    bubble_button = tk.Button(main_frame.scrollable_frame, text="Bubble Sort", command=lambda: on_clicked('Bubble Sort'), width=20)
-    bubble_button.pack(pady=15)
+    bubble_button = tk.Button(content, text="Bubble Sort", command=lambda: on_clicked('Bubble Sort'), width=20)
+    bubble_button.grid(row=3, column=0 ,pady=15)
 
     #selection sort
-    selection_button = tk.Button(main_frame.scrollable_frame, text="Selection Sort", command=lambda: on_clicked('Selection Sort'), width=20)
-    selection_button.pack(pady=15)
+    selection_button = tk.Button(content, text="Selection Sort", command=lambda: on_clicked('Selection Sort'), width=20)
+    selection_button.grid(row=4, column=0, pady=15)
 
     #merge sort
-    merge_button = tk.Button(main_frame.scrollable_frame, text="Merge Sort", command=lambda: on_clicked('Merge Sort'), width=20)
-    merge_button.pack(pady=15)
+    merge_button = tk.Button(content, text="Merge Sort", command=lambda: on_clicked('Merge Sort'), width=20)
+    merge_button.grid(row=5, column=0, pady=15)
 
     # exit button
-    exit_button = tk.Button(main_frame.scrollable_frame, text="Exit", command=on_exit, width=20)
-    exit_button.pack(pady=15)
+    exit_button = tk.Button(content, text="Exit", command=on_exit, width=20)
+    exit_button.grid(row=6, column=0, pady=15)
 
     root.mainloop()
 
