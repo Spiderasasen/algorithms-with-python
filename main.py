@@ -5,6 +5,8 @@ from sorting.bubble import bubbleSort
 from components.creat_list import creatingTheList
 from sorting.insert import insertionSort
 from sorting.selection import selection_sort
+from sorting.merge import mergeSort
+from typing import List, Optional, Tuple
 
 # Dictionary of complexities for each algorithm
 COMPLEXITIES = {
@@ -86,6 +88,57 @@ def selection_sort_steps(array):
         # swap the found minimum into place
         array[i], array[minIndex] = array[minIndex], array[i]
         yield array[:], i, minIndex
+
+def merge_sort_steps(array: List[int]):
+    yield array[:], None, None
+    if len(array) <= 1:
+        return array
+
+    mid = len(array) // 2
+
+    left = array[:mid]
+    right = array[mid:]
+
+    left_sorted: List[int] = yield from merge_sort_steps(left)   # get final sorted left
+    right_sorted: List[int] = yield from merge_sort_steps(right) # get final sorted right
+
+    merged:List[int] = []
+    i = j = 0
+    while i < len(left_sorted) and j < len(right_sorted):
+        #makes a sythitic state of visual
+        state = merged + left_sorted[i:] + right_sorted[j:]
+
+        #computes highlight indices within state
+        active_index = len(merged) #for left candiaite
+        compare_index = len(merged) + (len(left_sorted) - i) #for right caniadate
+
+        # highlight comparison
+        yield state, active_index, compare_index
+
+        if left_sorted[i] <= right_sorted[j]:
+            merged.append(left_sorted[i])
+            i += 1
+        else:
+            merged.append(right_sorted[j])
+            j += 1
+        yield merged + left_sorted[i:] + right_sorted[j:], i, j
+
+        #post-append frame
+        state = merged + left_sorted[i:] + right_sorted[j:]
+
+        #recomputing the indeices
+        active_index = len(merged)  # for left candiaite
+        compare_index = len(merged) + (len(left_sorted) - i)  # for right caniadate
+
+        yield state, active_index, compare_index
+
+    #append finals
+    merged.extend(left_sorted[i:])
+    merged.extend(right_sorted[j:])
+
+    #drawing the final vision
+    yield merged, None, None
+    return merged
 
 
 # main window
@@ -184,6 +237,20 @@ def main():
                 complexity = COMPLEXITIES.get(name, "")
                 visualizer(canvas, steps, complexity=complexity)
                 show_algorithm('Selection Sort', num, num2)
+            case 'Merge Sort':
+                n = how_many_elements()
+                if n is None:
+                    return
+
+                #does sorting in the background
+                num = creatingTheList(n)
+                num2 = mergeSort(num.copy())
+
+                #visulizer
+                steps = merge_sort_steps(num.copy())
+                complexity = COMPLEXITIES.get(name, "")
+                visualizer(canvas, steps, complexity=complexity)
+                show_algorithm('Merge Sort', num, num2)
 
     #Insertion Sort
     insort_button = tk.Button(root, text="Insertion Sort", command=lambda: on_clicked('Insertion Sort'), width=20)
@@ -196,6 +263,10 @@ def main():
     #selection sort
     selection_button = tk.Button(root, text="Selection Sort", command=lambda: on_clicked('Selection Sort'), width=20)
     selection_button.pack(pady=15)
+
+    #merge sort
+    merge_button = tk.Button(root, text="Merge Sort", command=lambda: on_clicked('Merge Sort'), width=20)
+    merge_button.pack(pady=15)
 
     # exit button
     exit_button = tk.Button(root, text="Exit", command=on_exit, width=20)

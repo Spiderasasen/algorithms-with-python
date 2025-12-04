@@ -20,7 +20,7 @@ def merge(left: List[int], right:List[int]) -> List[int]:
     result = []
     i = j = 0
     while i < len(left) and j < len(right):
-        if left[0] <= right[0]:
+        if left[i] <= right[j]:
             result.append(left[i])
             i = i + 1
         else:
