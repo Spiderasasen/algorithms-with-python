@@ -22,7 +22,6 @@ def draw_bars(canvas, array, active_index=None, compare_index=None, complexity="
                        anchor="nw", font=("Arial", 12, "bold"), fill="black")
     canvas.update_idletasks()
 
-
 def visualizer(canvas, steps, delay=0.1, complexity=""):
     for state, active_index, compare_index in steps:
         draw_bars(canvas, state, active_index=active_index, compare_index=compare_index, complexity=complexity)
