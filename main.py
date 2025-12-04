@@ -105,9 +105,7 @@ def main():
 
                 # else add a list then call insertion sort with the number they wanted (mainly used for me to practice coding it)
                 num = creatingTheList(n)
-                num2 = num.copy()
-                num2 = insertionSort(num2)
-                print(num2)
+                num2 = insertionSort(num.copy())
                 #goes through the universal method and also calling the steps
                 steps = insertion_sort_steps(num.copy())
                 complexity = COMPLEXITIES.get(name, "")
