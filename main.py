@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import simpledialog
 from components.visulaize import visualizer
+from components.algoirthm_results import show_algorithm
 from sorting.bubble import bubbleSort, bubble_sort_steps
 from components.creat_list import creatingTheList
 from sorting.insert import insertionSort, insertion_sort_steps
@@ -49,25 +50,6 @@ def main():
     canvas.grid(row=1, column=0, pady=10)
     print('canvas created')
 
-    #resuable page
-    def show_algorithm(name, numbers, sorted_numbers):
-        # If window already exists, reuse it
-        if hasattr(root, "algo_window") and root.algo_window.winfo_exists():
-            win = root.algo_window
-            for widget in win.winfo_children():
-                widget.destroy()  # clear old content
-        else:
-            win = tk.Toplevel(root)
-            root.algo_window = win
-            win.geometry("500x400")
-
-        win.title(f"{name} Results")
-
-        text_box = tk.Text(win, wrap="word", font=("Arial", 12))
-        text_box.pack(expand=True, fill="both", padx=10, pady=10)
-        text_box.insert(tk.END, f"Unsorted list:\n{numbers}\n\n")
-        text_box.insert(tk.END, f"Sorted list:\n{sorted_numbers}\n")
-
     def how_many_elements() -> int:
         n = simpledialog.askinteger("Input", "How many numbers do you want to sort?", parent=root)
         print(n)
@@ -95,7 +77,7 @@ def main():
                 complexity = COMPLEXITIES.get(name, "")
                 visualizer(canvas, steps, complexity=complexity)
                 #showing the differnace between unsorted and sorted
-                show_algorithm('Insertion Sort', num, num2)
+                show_algorithm(root, 'Insertion Sort', num, num2)
             case "Bubble Sort":
                 n = how_many_elements()
                 if n is None:
@@ -108,7 +90,7 @@ def main():
                 steps = bubble_sort_steps(num.copy())
                 complexity = COMPLEXITIES.get(name, "")
                 visualizer(canvas, steps, complexity=complexity)
-                show_algorithm('Bubble Sort', num, num2)
+                show_algorithm(root ,'Bubble Sort', num, num2)
             case "Selection Sort":
                 n = how_many_elements()
                 if n is None:
@@ -121,7 +103,7 @@ def main():
                 steps = selection_sort_steps(num.copy())
                 complexity = COMPLEXITIES.get(name, "")
                 visualizer(canvas, steps, complexity=complexity)
-                show_algorithm('Selection Sort', num, num2)
+                show_algorithm(root, 'Selection Sort', num, num2)
             case 'Merge Sort':
                 n = how_many_elements()
                 if n is None:
@@ -135,7 +117,7 @@ def main():
                 steps = merge_sort_steps(num.copy())
                 complexity = COMPLEXITIES.get(name, "")
                 visualizer(canvas, steps, complexity=complexity)
-                show_algorithm('Merge Sort', num, num2)
+                show_algorithm(root, 'Merge Sort', num, num2)
 
     #Insertion Sort
     insort_button = tk.Button(content, text="Insertion Sort", command=lambda: on_clicked('Insertion Sort'), width=20)

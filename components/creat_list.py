@@ -7,5 +7,11 @@ def creatingTheList(n: int) -> List[int]:
         num: int = random.randint(1, n)
         if num not in numbers:
             numbers.append(num)
+        else:
+            while True:
+                num = random.randint(1, n)
+                if num not in numbers:
+                    numbers.append(num)
+                    break
     print(numbers)
     return numbers
