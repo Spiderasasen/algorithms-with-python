@@ -1,12 +1,11 @@
 import tkinter as tk
 from tkinter import simpledialog
 import time
-from sorting.bubble import bubbleSort
+from sorting.bubble import bubbleSort, bubble_sort_steps
 from components.creat_list import creatingTheList
-from sorting.insert import insertionSort
-from sorting.selection import selection_sort
-from sorting.merge import mergeSort
-from typing import List, Optional, Tuple
+from sorting.insert import insertionSort, insertion_sort_steps
+from sorting.selection import selection_sort, selection_sort_steps
+from sorting.merge import mergeSort, merge_sort_steps
 
 # Dictionary of complexities for each algorithm
 COMPLEXITIES = {
@@ -45,107 +44,11 @@ def visualizer(canvas, steps, delay=0.1, complexity=""):
         draw_bars(canvas, state, active_index=active_index, compare_index=compare_index, complexity=complexity)
         time.sleep(delay)
 
-
-def insertion_sort_steps(array):
-    for i in range(1, len(array)):
-        key = array[i]
-        j = i - 1
-        # highlight the key
-        yield array[:], i, j
-        while j >= 0 and array[j] > key:
-            array[j + 1] = array[j]
-            j -= 1
-            yield array[:], i, j  # yield after each shift
-        array[j + 1] = key
-        yield array[:], i, None  # yield after placing key
-
-def bubble_sort_steps(array):
-    n = len(array)
-    swapped: bool = True
-    while swapped:
-        swapped = False
-        for j in range (0, n-1):
-            #yielding before comparison
-            yield array[:], j, j+1
-            if array[j] > array[j+1]:
-                array[j], array[j+1] = array[j+1], array[j]
-                swapped = True
-                #yield after swap
-                yield array[:], j, j+1
-        n -= 1
-
-def selection_sort_steps(array):
-    n = len(array)
-    for i in range(n):
-        minIndex = i
-        for j in range(i + 1, n):
-            # highlight i (red) and j (green)
-            yield array[:], i, j
-            if array[j] < array[minIndex]:
-                minIndex = j
-                # highlight new minIndex (could use green again)
-                yield array[:], i, minIndex
-        # swap the found minimum into place
-        array[i], array[minIndex] = array[minIndex], array[i]
-        yield array[:], i, minIndex
-
-def merge_sort_steps(array: List[int]):
-    yield array[:], None, None
-    if len(array) <= 1:
-        return array
-
-    mid = len(array) // 2
-
-    left = array[:mid]
-    right = array[mid:]
-
-    left_sorted: List[int] = yield from merge_sort_steps(left)   # get final sorted left
-    right_sorted: List[int] = yield from merge_sort_steps(right) # get final sorted right
-
-    merged:List[int] = []
-    i = j = 0
-    while i < len(left_sorted) and j < len(right_sorted):
-        #makes a sythitic state of visual
-        state = merged + left_sorted[i:] + right_sorted[j:]
-
-        #computes highlight indices within state
-        active_index = len(merged) #for left candiaite
-        compare_index = len(merged) + (len(left_sorted) - i) #for right caniadate
-
-        # highlight comparison
-        yield state, active_index, compare_index
-
-        if left_sorted[i] <= right_sorted[j]:
-            merged.append(left_sorted[i])
-            i += 1
-        else:
-            merged.append(right_sorted[j])
-            j += 1
-        yield merged + left_sorted[i:] + right_sorted[j:], i, j
-
-        #post-append frame
-        state = merged + left_sorted[i:] + right_sorted[j:]
-
-        #recomputing the indeices
-        active_index = len(merged)  # for left candiaite
-        compare_index = len(merged) + (len(left_sorted) - i)  # for right caniadate
-
-        yield state, active_index, compare_index
-
-    #append finals
-    merged.extend(left_sorted[i:])
-    merged.extend(right_sorted[j:])
-
-    #drawing the final vision
-    yield merged, None, None
-    return merged
-
-
 # main window
 def main():
     root = tk.Tk()
     root.title("Algorithm Visualization")
-    root.geometry("900x800")
+    root.geometry("1000x900")
 
     #for exit button
     def on_exit():
