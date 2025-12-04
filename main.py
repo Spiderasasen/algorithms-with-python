@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import simpledialog
-import time
+from components.visulaize import visualizer
 from sorting.bubble import bubbleSort, bubble_sort_steps
 from components.creat_list import creatingTheList
 from sorting.insert import insertionSort, insertion_sort_steps
@@ -17,33 +17,6 @@ COMPLEXITIES = {
     "Quick Sort": "Best/Average: O(n log n), \nWorst: O(n^2)",
     "Heap Sort": "Best/Average/Worst: O(n log n)"
 }
-
-def draw_bars(canvas, array, active_index=None, compare_index=None, complexity=""):
-    canvas.delete("all")
-    c_width = 400
-    c_height = 300
-    bar_width = c_width / len(array)
-    for i, val in enumerate(array):
-        x0 = i * bar_width
-        y0 = c_height - val
-        x1 = (i + 1) * bar_width
-        y1 = c_height
-        if i == active_index:
-            color = "red"
-        elif i == compare_index:
-            color = "green"
-        else:
-            color = "blue"
-        canvas.create_rectangle(x0, y0, x1, y1, fill=color)
-    canvas.create_text(10, 10, text=f"Time Complexity:\n{complexity}",
-                       anchor="nw", font=("Arial", 12, "bold"), fill="black")
-    canvas.update_idletasks()
-
-
-def visualizer(canvas, steps, delay=0.1, complexity=""):
-    for state, active_index, compare_index in steps:
-        draw_bars(canvas, state, active_index=active_index, compare_index=compare_index, complexity=complexity)
-        time.sleep(delay)
 
 # main window
 def main():
