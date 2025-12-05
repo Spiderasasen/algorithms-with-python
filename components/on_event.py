@@ -1,11 +1,10 @@
 from tkinter import simpledialog
-from components.visulaize import visualizer
-from components.algoirthm_results import show_algorithm
 from sorting.bubble import bubbleSort, bubble_sort_steps
 from components.creat_list import creatingTheList
 from sorting.insert import insertionSort, insertion_sort_steps
 from sorting.selection import selection_sort, selection_sort_steps
 from sorting.merge import mergeSort, merge_sort_steps
+from components.main_algoithm_layout import main_layout
 
 
 def how_many_elements(root) -> int:
@@ -36,52 +35,26 @@ def on_clicked(name: str, root, canvas):
             # if nothing, then just return nothing
             if n is None:
                 return
-
-                # else add a list then call insertion sort with the number they wanted (mainly used for me to practice coding it)
-            num = creatingTheList(n)
-            num2 = insertionSort(num.copy())
-            #goes through the universal method and also calling the steps
-            steps = insertion_sort_steps(num.copy())
-            complexity = COMPLEXITIES.get(name, "")
-            visualizer(canvas, steps, complexity=complexity)
-            #showing the differnace between unsorted and sorted
-            show_algorithm(root, 'Insertion Sort', num, num2)
+            #does the thing
+            main_layout(root, canvas, name, n, insertionSort, insertion_sort_steps, COMPLEXITIES)
         case "Bubble Sort":
             n = how_many_elements(root)
             if n is None:
                 return
 
-            #does the sorting in the background first
-            num = creatingTheList(n)
-            num2 = bubbleSort(num.copy())
-            #fixes the visulizer
-            steps = bubble_sort_steps(num.copy())
-            complexity = COMPLEXITIES.get(name, "")
-            visualizer(canvas, steps, complexity=complexity)
-            show_algorithm(root ,'Bubble Sort', num, num2)
+            #does the thing
+            main_layout(root, canvas, name, n, bubbleSort, bubble_sort_steps, COMPLEXITIES)
         case "Selection Sort":
             n = how_many_elements(root)
             if n is None:
                 return
 
-            #does sorting in the back ground
-            num = creatingTheList(n)
-            num2 = selection_sort(num.copy())
-            #visualzer
-            steps = selection_sort_steps(num.copy())
-            complexity = COMPLEXITIES.get(name, "")
-            visualizer(canvas, steps, complexity=complexity)
-            show_algorithm(root, 'Selection Sort', num, num2)
+            #does a thing
+            main_layout(root, canvas, name, n, selection_sort, selection_sort_steps, COMPLEXITIES)
         case 'Merge Sort':
             n = how_many_elements(root)
             if n is None:
                 return
 
-            #does sorting in the background
-            num = creatingTheList(n)
-            num2 = mergeSort(num.copy())
-            #visulizer
-            steps = merge_sort_steps(num.copy())
-            complexity = COMPLEXITIES.get(name, "")
-            visualizer(canvas, steps, complexity=complexity)
-            show_algorithm(root, 'Merge Sort', num, num2)
+            #does a thing
+            main_layout(root, canvas, name, n, mergeSort, merge_sort_steps, COMPLEXITIES)
