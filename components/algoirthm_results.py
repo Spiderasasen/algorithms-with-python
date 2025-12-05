@@ -10,7 +10,7 @@ def show_algorithm(root, name, numbers, sorted_numbers):
     else:
         win = tk.Toplevel(root)
         root.algo_window = win
-        win.geometry("500x700")
+        win.geometry("500x600")
 
     win.title(f"{name} Results")
 
