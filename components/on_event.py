@@ -3,7 +3,8 @@ from sorting.bubble import bubbleSort, bubble_sort_steps
 from sorting.insert import insertionSort, insertion_sort_steps
 from sorting.selection import selection_sort, selection_sort_steps
 from sorting.merge import mergeSort, merge_sort_steps
-from components.main_algoithm_layout import main_layout
+from components.main_algoithm_layout import main_layout, quick_sort_layout
+from sorting.qucik_sort import randomized_quicksort, randomized_quick_sort_steps
 
 #checking how many elements are called
 def how_many_elements(root) -> int:
@@ -48,3 +49,7 @@ def on_clicked(name: str, root, canvas):
             n = how_many_elements(root)
             #does a thing
             main_layout(root, canvas, name, n, mergeSort, merge_sort_steps, COMPLEXITIES)
+        case "Quick Sort":
+            n = how_many_elements(root)
+            #does a thing
+            quick_sort_layout(root, canvas, name, n, randomized_quicksort, randomized_quick_sort_steps, COMPLEXITIES)
