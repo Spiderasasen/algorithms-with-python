@@ -3,7 +3,7 @@ from components.visulaize import visualizer
 from components.algoirthm_results import show_algorithm
 from typing import List
 
-def main_layout(root, canvas, name: str,num_elements: int, sortingAlgorithmConsole, sortingAlgorithmVisualizer, complex):
+def main_layout(root, canvas, name: str,num_elements: int, sortingAlgorithmConsole, sortingAlgorithmVisualizer, complexity):
     #for the console log
     num:List[int] = creatingTheList(num_elements)
     num2: List[int] = sortingAlgorithmConsole(num.copy())
@@ -11,7 +11,7 @@ def main_layout(root, canvas, name: str,num_elements: int, sortingAlgorithmConso
     #for the visualizer
     print("starting the visual effects")
     steps = sortingAlgorithmVisualizer(num.copy())
-    time = complex.get(name, "")
+    time = complexity.get(name, "")
     visualizer(canvas, steps, complexity=time)
     print("finished the visualization")
     #shows the results

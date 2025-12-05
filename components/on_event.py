@@ -1,14 +1,17 @@
 from tkinter import simpledialog
 from sorting.bubble import bubbleSort, bubble_sort_steps
-from components.creat_list import creatingTheList
 from sorting.insert import insertionSort, insertion_sort_steps
 from sorting.selection import selection_sort, selection_sort_steps
 from sorting.merge import mergeSort, merge_sort_steps
 from components.main_algoithm_layout import main_layout
 
-
+#checking how many elements are called
 def how_many_elements(root) -> int:
     n = simpledialog.askinteger("Input", "How many numbers do you want to sort?", parent=root)
+    #if no element found, just return
+    if n is None:
+        return
+    #if an element is found, return the number
     print(n)
     return n
 
@@ -31,30 +34,17 @@ def on_clicked(name: str, root, canvas):
         case 'Insertion Sort':
             # asking the user how many number
             n = how_many_elements(root)
-
-            # if nothing, then just return nothing
-            if n is None:
-                return
             #does the thing
             main_layout(root, canvas, name, n, insertionSort, insertion_sort_steps, COMPLEXITIES)
         case "Bubble Sort":
             n = how_many_elements(root)
-            if n is None:
-                return
-
             #does the thing
             main_layout(root, canvas, name, n, bubbleSort, bubble_sort_steps, COMPLEXITIES)
         case "Selection Sort":
             n = how_many_elements(root)
-            if n is None:
-                return
-
             #does a thing
             main_layout(root, canvas, name, n, selection_sort, selection_sort_steps, COMPLEXITIES)
         case 'Merge Sort':
             n = how_many_elements(root)
-            if n is None:
-                return
-
             #does a thing
             main_layout(root, canvas, name, n, mergeSort, merge_sort_steps, COMPLEXITIES)
