@@ -33,7 +33,8 @@ COMPLEXITIES = {
     "Selection Sort": "Always: O(n^2)",
     "Merge Sort": "Best/Average/Worst: O(n log n)",
     "Quick Sort": "Best/Average: O(n log n), \nWorst: O(n^2)",
-    "Heap Sort": "Best/Average/Worst: O(n log n)"
+    "Heap Sort": "Best/Average/Worst: O(n log n)",
+    "Counting Sort": "Best/Average/Worst: O(n + k)"
 }
 
 # console log for buttons and also shows the results on the page
