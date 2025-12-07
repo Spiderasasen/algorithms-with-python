@@ -57,9 +57,13 @@ def main():
     heap_button = tk.Button(content, text="Heap Sort", command=lambda: on_clicked('Heap Sort', root, canvas), width=20)
     heap_button.grid(row=7, column=0, pady=15)
 
+    #counting sort
+    count_button = tk.Button(content, text="Counting Sort", command=lambda: on_clicked('Counting Sort', root, canvas), width=20)
+    count_button.grid(row=8, column=0, pady=15)
+
     # exit button
     exit_button = tk.Button(content, text="Exit", command=on_exit, width=20)
-    exit_button.grid(row=8, column=0, pady=15)
+    exit_button.grid(row=9, column=0, pady=15)
 
     root.mainloop()
 
