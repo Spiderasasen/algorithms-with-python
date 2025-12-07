@@ -61,9 +61,13 @@ def main():
     count_button = tk.Button(content, text="Counting Sort", command=lambda: on_clicked('Counting Sort', root, canvas), width=20)
     count_button.grid(row=8, column=0, pady=15)
 
+    #radix sort
+    radix_button = tk.Button(content, text="Radix Sort", command=lambda: on_clicked('Radix Sort', root, canvas), width=20)
+    radix_button.grid(row=9, column=0, pady=15)
+
     # exit button
     exit_button = tk.Button(content, text="Exit", command=on_exit, width=20)
-    exit_button.grid(row=9, column=0, pady=15)
+    exit_button.grid(row=10, column=0, pady=15)
 
     root.mainloop()
 
