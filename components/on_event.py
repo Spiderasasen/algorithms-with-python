@@ -21,7 +21,8 @@ def which_heap(root)-> str:
     n = simpledialog.askstring("Input", "Which heap do you want to sort?\nMin or Max", parent=root)
     #if no element found is found
     if n is None or n == "" or n.isdigit():
-        return
+        print(n)
+        return None
     print(n)
     return n
 
@@ -66,10 +67,19 @@ def on_clicked(name: str, root, canvas):
             n = how_many_elements(root)
             type_heap = which_heap(root)
 
+            #if the user typed something other than min or max
+            if type_heap is None:
+                simpledialog.askstring("NO HEAP SELECTED", "going to do a merge sort instead", parent=root)
+                main_layout(root, canvas, "Merge Sort", n, mergeSort, merge_sort_steps, COMPLEXITIES)
+
+            heap = type_heap.lower()
             #calls the min heap function
-            if type_heap.lower() == "min":
+            if "min" in heap:
+                print("doing min")
                 main_layout(root, canvas, name, n, min_heap, min_heap_steps, COMPLEXITIES)
-            elif type_heap.lower() == "max":
+            #calls the max heap function
+            elif "max" in heap:
+                print("doing max")
                 main_layout(root, canvas, name, n, max_heap, max_heap_steps, COMPLEXITIES)
             else:
                 simpledialog.askstring("NO HEAP SELECTED", "going to do a merge sort instead", parent=root)
