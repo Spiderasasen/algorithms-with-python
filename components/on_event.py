@@ -5,6 +5,7 @@ from sorting.selection import selection_sort, selection_sort_steps
 from sorting.merge import mergeSort, merge_sort_steps
 from components.main_algoithm_layout import main_layout, quick_sort_layout
 from sorting.qucik_sort import randomized_quicksort, randomized_quick_sort_steps
+from sorting.heaps import max_heap, max_heap_steps, min_heap, min_heap_steps
 
 #checking how many elements are called
 def how_many_elements(root) -> int:
@@ -13,6 +14,14 @@ def how_many_elements(root) -> int:
     if n is None:
         return
     #if an element is found, return the number
+    print(n)
+    return n
+
+def which_heap(root)-> str:
+    n = simpledialog.askstring("Input", "Which heap do you want to sort?\nMin or Max", parent=root)
+    #if no element found is found
+    if n is None or n == "" or n.isdigit():
+        return
     print(n)
     return n
 
@@ -53,3 +62,15 @@ def on_clicked(name: str, root, canvas):
             n = how_many_elements(root)
             #does a thing
             quick_sort_layout(root, canvas, name, n, randomized_quicksort, randomized_quick_sort_steps, COMPLEXITIES)
+        case "Heap Sort":
+            n = how_many_elements(root)
+            type_heap = which_heap(root)
+
+            #calls the min heap function
+            if type_heap.lower() == "min":
+                main_layout(root, canvas, name, n, min_heap, min_heap_steps, COMPLEXITIES)
+            elif type_heap.lower() == "max":
+                main_layout(root, canvas, name, n, max_heap, max_heap_steps, COMPLEXITIES)
+            else:
+                simpledialog.askstring("NO HEAP SELECTED", "going to do a merge sort instead", parent=root)
+                main_layout(root, canvas, "Merge Sort", n, mergeSort, merge_sort_steps, COMPLEXITIES)

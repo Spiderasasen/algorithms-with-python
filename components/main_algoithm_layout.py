@@ -12,7 +12,7 @@ def main_layout(root, canvas, name: str,num_elements: int, sortingAlgorithmConso
     print("starting the visual effects")
     steps = sortingAlgorithmVisualizer(num.copy())
     time = complexity.get(name, "")
-    visualizer(canvas, steps, complexity=time)
+    visualizer(canvas, steps, complexity=time, name=name)
     print("finished the visualization")
     #shows the results
     show_algorithm(root, name, num, num2)
@@ -27,7 +27,7 @@ def quick_sort_layout(root, canvas, name: str, num_elements: int, sortingAlgorit
     print("starting the visual effects")
     steps = sortingAlgorithmVisualizer(num.copy(), 0, len(num)-1)
     time = complexity.get(name, "")
-    visualizer(canvas, steps, complexity=time)
+    visualizer(canvas, steps, complexity=time, name=name)
     print("finished the visualization")
     # shows the results
     show_algorithm(root, name, num, num2)

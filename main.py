@@ -53,9 +53,13 @@ def main():
     quick_sort_button = tk.Button(content, text="Randomized Quick Sort", command=lambda: on_clicked('Quick Sort', root, canvas), width=20)
     quick_sort_button.grid(row=6, column=0, pady=15)
 
+    #heap sort
+    heap_button = tk.Button(content, text="Heap Sort", command=lambda: on_clicked('Heap Sort', root, canvas), width=20)
+    heap_button.grid(row=7, column=0, pady=15)
+
     # exit button
     exit_button = tk.Button(content, text="Exit", command=on_exit, width=20)
-    exit_button.grid(row=7, column=0, pady=15)
+    exit_button.grid(row=8, column=0, pady=15)
 
     root.mainloop()
 
