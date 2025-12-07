@@ -8,6 +8,7 @@ from sorting.qucik_sort import randomized_quicksort, randomized_quick_sort_steps
 from sorting.heaps import max_heap, max_heap_steps, min_heap, min_heap_steps
 from sorting.counting import counting_sort, counting_sort_steps
 from sorting.Radix import radix_sort, radix_sort_steps
+from sorting.bucket import bucket_sort, bucket_sort_steps
 
 #checking how many elements are called
 def how_many_elements(root) -> int:
@@ -95,3 +96,6 @@ def on_clicked(name: str, root, canvas):
         case "Radix Sort":
             n = how_many_elements(root)
             main_layout(root, canvas, name, n, radix_sort, radix_sort_steps, COMPLEXITIES)
+        case "Bucket Sort":
+            n = how_many_elements(root)
+            main_layout(root, canvas, name, n, bucket_sort, bucket_sort_steps, COMPLEXITIES)
